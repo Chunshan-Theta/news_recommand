@@ -1,0 +1,24 @@
+<!-- hello_world.html -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hi! Django</title>
+        <style>
+            body {
+               background-color: lightyellow;
+            }
+            em {
+                color: LightSeaGreen;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Using Static </h1>
+        <img src="../static/images/1.jpg" alt="test View">
+
+        {% load staticfiles %}
+        <script type="text/javascript" src="{% static 'js/jq.js' %}"></script>
+
+    </body>
+</html>

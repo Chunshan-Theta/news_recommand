@@ -1,0 +1,28 @@
+<!-- hello_world.html -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hi! Django</title>
+        <style>
+            body {
+               background-color: lightyellow;
+            }
+            em {
+                color: LightSeaGreen;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Django is working</h1>
+        <em>this's the data : {{ stringData }}</em>
+
+
+
+        <form action="#" method="post">{% csrf_token %}            
+            <input type="text" name="input1" value="input1"></input>
+            
+            <br><input type="submit" value="post">
+        </form> 
+    </body>
+</html>

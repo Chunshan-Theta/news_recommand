@@ -1,0 +1,20 @@
+<!-- hello_world.html -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Show DB!!</title>
+    </head>
+    <body>
+        {% for div in Data %}
+        	<div style="background-color: #EEE;color: #777;padding:10px;border: 5px #FFF solid;">
+	        	<label>{{ div.id }}</label><br />
+	        	<label>{{ div.content }}</label><br /> 
+	        	<label>{{ div.keywords }}</label><br /> 
+	        	<label>{{ div.url }}</label><br /> 
+
+	        </div>
+		{% endfor %}
+		
+    </body>
+</html>
