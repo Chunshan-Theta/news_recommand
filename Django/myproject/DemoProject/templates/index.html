@@ -137,11 +137,16 @@
 
 									
 										<section>
-											<header>
-												<h2>{{ div.id }}</h2>
+											<header>												
+												<a href="./{{ div.id }}/"><h2>{{ div.title }}</h2></a>
 												<h6 hidden>{{ div.keywords }}</h6>
 											</header>
-											<a href="#" class="feature-image"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>
+											<!--<a href="#" class="feature-image"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>-->
+											{% if div.picurl == 'NULL' %}
+												<a href="#" class="feature-image" style="width: 325px; height: 210px;"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>
+											{% else %}
+												<a href="#" class="feature-image" style="width: 325px; height: 210px; overflow: hidden;"><img src="{{ div.picurl }}" alt="" /></a>
+											{% endif %}
 											<p>
 												{{ div.content }}
 											</p>

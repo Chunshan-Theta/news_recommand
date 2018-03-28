@@ -4,7 +4,7 @@ from datetime import datetime
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 import sys
-sys.path.append('/home/gavin/Desktop/news/Django/myproject/DemoProject/models/')
+sys.path.append('/home/gavin/Desktop/news_recommand/Django/myproject/DemoProject/models/')
 import MySQL_model as md
 ###### show view ######
 
@@ -69,6 +69,9 @@ def SQL_all(request):
         eachdiv["content"] = i[1][:100]
         eachdiv["keywords"] = i[5]
         eachdiv["url"] = i[2]
+        eachdiv["title"] = i[6]
+        eachdiv["picbiref"] = i[7]
+        eachdiv["picurl"] = i[8]
         arr.append(eachdiv)
 
     template = 'index.html'
@@ -100,7 +103,7 @@ def SQL_test(request,c):
     text_array.append(["ㄧ個月內相關文章"])
     index=0
 
-    while len(text_array)<10+1 and index <30000:
+    while len(text_array)<10+1 and index <1000:
         
         if index == cpint:
             index+=1    
