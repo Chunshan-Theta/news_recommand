@@ -69,12 +69,12 @@ def SQL_all(request):
         eachdiv["content"] = i[1][:100]
         eachdiv["keywords"] = i[5]
         eachdiv["url"] = i[2]
-        eachdiv["title"] = i[6]
+        eachdiv["title"] = i[6][:20]
         eachdiv["picbiref"] = i[7]
         eachdiv["picurl"] = i[8]
         arr.append(eachdiv)
 
-    template = 'index.html'
+    template = 'news_list.html'
     responds = {'Data':arr}
     return render(request,template,responds )
 def SQL_test(request,c):
@@ -84,36 +84,47 @@ def SQL_test(request,c):
 
     md.close()
     cpint =int(c)
-    for i in range(200):
+    for i in reversed(range(int(cpint)+1)):
         if str(a[i][0]) == str(cpint):
             cpint = i
+            #print(i)
             break
 
     
     criteria_point = a[cpint][3]    
     import json    
     criteria_point_j = json.loads(criteria_point)
-    text_array=[]
-    text_array_extent=[]
-    opener_div =[]    
-    opener_div.append(a[cpint][1])
-    opener_div.append(a[cpint][5])
-    opener_div.append(a[cpint][2]+"   ,"+str(a[cpint][0]))
-    text_array.append(opener_div)
-    text_array.append(["ㄧ個月內相關文章"])
-    index=0
+    opener_div ={}    
+    opener_div["id"] = a[cpint][0]
+    opener_div["content"] = a[cpint][1]
+    opener_div["keywords"] = a[cpint][5]
+    opener_div["url"] = a[cpint][2]
+    opener_div["title"] = a[cpint][6][:20]
+    opener_div["picbiref"] = a[cpint][7]
+    opener_div["picurl"] = a[cpint][8]
+    opener_div["date"] = a[cpint][4]
 
-    while len(text_array)<10+1 and index <1000:
+    
+    text_array=[]
+    index=0
+    top10_index=[]
+    top10_div=[]
+    #print(len(a))
+    while index <3000 and index <len(a)-1:
         
         if index == cpint:
             index+=1    
-        score=0
+        
         test_point = a[index][3]
         try:
             test_point_j = json.loads(test_point)
         except:
             print(test_point)
+
+
+        score=0
         for i in range(20):
+            each_score=[]
             for j in range(20):
                 try:
                     cx = float(criteria_point_j[str(i)+'-x']) 
@@ -122,35 +133,33 @@ def SQL_test(request,c):
                     ty = float(test_point_j[str(j)+'-y']) 
                     
                     result = ((tx-cx)**2+(ty-cy)**2)**0.5
-                    if result==0:
-                        score+=1
-                        break
-                    elif result<0.000000005 and i<=5 and j<=5:
-                        score+=0.5
-                        break
-                    else:
-                        pass
+                    each_score.append(1-result)
+                    
                 except:
                     pass
+            score += max(each_score)
                     
-        if score>=7.5:
-            news_div=[]
-            news_div.append(str(a[index][0])+","+str(score)+","+a[index][2])
-            news_div.append(a[index][1])
-            news_div.append(str(a[index][5]))
-            text_array.append(news_div)
-        elif score>=4.5 and len(text_array_extent)<20:
-            news_div=[]
-            news_div.append(str(a[index][0])+","+str(score)+","+a[index][2])
-            news_div.append(a[index][1])
-            news_div.append(str(a[index][5]))
-            text_array_extent.append(news_div)
-        else:
-            pass
+        text_array.append([score,index])
         index+=1
     else:
-        text_array.append(["Search_end:"+str(index)])
+        
+        for i in range(9):
+            #print(max(text_array)[1])
+            top10_index.append(max(text_array)[1])
+            del text_array[text_array.index(max(text_array))]
     #print(text_array)
+    for i in top10_index:
+        eachdiv={}
+        eachdiv["id"] = a[i][0]
+        eachdiv["content"] = a[i][1][:100]
+        eachdiv["keywords"] = a[i][5]
+        eachdiv["url"] = a[i][2]
+        eachdiv["title"] = a[i][6]
+        eachdiv["picbiref"] = a[i][7]
+        eachdiv["picurl"] = a[i][8]
+
+        top10_div.append(eachdiv)
+
     template = 'news_each.html'
-    responds = {'Data':text_array,"Data2":text_array_extent}
+    responds = {'Topic':opener_div,'Data':top10_div}
     return render(request,template,responds )
