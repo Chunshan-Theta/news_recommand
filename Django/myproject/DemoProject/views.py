@@ -56,7 +56,7 @@ def api_template(request):
 def SQL_all(request):
     
     md.connectDB()
-    a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` GROUP BY `url` ORDER BY `PostList`.`id` ASC Limit 50')
+    a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` GROUP BY `url` ORDER BY `PostList`.`id` ASC Limit 60')
     #a = md.exeSQl('SELECT * FROM `PostList`')
 
     md.close()
@@ -99,7 +99,7 @@ def SQL_test(request,c):
     opener_div["content"] = a[cpint][1]
     opener_div["keywords"] = a[cpint][5]
     opener_div["url"] = a[cpint][2]
-    opener_div["title"] = a[cpint][6][:20]
+    opener_div["title"] = a[cpint][6]
     opener_div["picbiref"] = a[cpint][7]
     opener_div["picurl"] = a[cpint][8]
     opener_div["date"] = a[cpint][4]
@@ -110,7 +110,7 @@ def SQL_test(request,c):
     top10_index=[]
     top10_div=[]
     #print(len(a))
-    while index <3000 and index <len(a)-1:
+    while index <30000 and index <len(a)-1:
         
         if index == cpint:
             index+=1    
@@ -133,12 +133,23 @@ def SQL_test(request,c):
                     ty = float(test_point_j[str(j)+'-y']) 
                     
                     result = ((tx-cx)**2+(ty-cy)**2)**0.5
-                    each_score.append(1-result)
-                    
+                    if result==0:
+                        each_score.append(1)
+                    else:
+                        each_score.append(-1*result)
+
                 except:
                     pass
             score += max(each_score)
-                    
+        '''
+        if len(text_array)>10:
+            c = min(text_array)
+            if score > c[1]:
+                text_array.append([score,index])                
+                del text_array[text_array.index(c)]
+        else:
+            text_array.append([score,index])
+        '''
         text_array.append([score,index])
         index+=1
     else:
@@ -154,9 +165,11 @@ def SQL_test(request,c):
         eachdiv["content"] = a[i][1][:100]
         eachdiv["keywords"] = a[i][5]
         eachdiv["url"] = a[i][2]
-        eachdiv["title"] = a[i][6]
+        eachdiv["title"] = a[i][6][:20]
         eachdiv["picbiref"] = a[i][7]
         eachdiv["picurl"] = a[i][8]
+        eachdiv["date"] = a[cpint][4]
+
 
         top10_div.append(eachdiv)
 

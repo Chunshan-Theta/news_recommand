@@ -14,6 +14,64 @@
 		
 		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<style type="text/css">
+			.pixel-spinner, .pixel-spinner * {
+		      box-sizing: border-box;
+		      width: 20%;
+		      margin-left: 45%;
+		    }
+
+		    .pixel-spinner {
+		      height: 70px;
+		      width: 70px;
+		      display: flex;
+		      flex-direction: row;
+		      justify-content: center;
+		      align-items: center;
+		    }
+
+		    .pixel-spinner .pixel-spinner-inner {
+		      width: calc(70px / 7);
+		      height: calc(70px / 7);
+		      background-color: #ff1d5e;
+		      color: #ff1d5e;
+		      box-shadow: 15px 15px  0 0,
+		                  -15px -15px  0 0,
+		                  15px -15px  0 0,
+		                  -15px 15px  0 0,
+		                  0 15px  0 0,
+		                  15px 0  0 0,
+		                  -15px 0  0 0,
+		                  0 -15px 0 0;
+		      animation: pixel-spinner-animation 2000ms linear infinite;
+		    }
+
+		    @keyframes pixel-spinner-animation {
+		      50% {
+		        box-shadow: 20px 20px 0px 0px,
+		                    -20px -20px 0px 0px,
+		                    20px -20px 0px 0px,
+		                    -20px 20px 0px 0px,
+		                    0px 10px 0px 0px,
+		                    10px 0px 0px 0px,
+		                    -10px 0px 0px 0px,
+		                    0px -10px 0px 0px;
+		      }
+		      75% {
+		        box-shadow: 20px 20px 0px 0px,
+		                    -20px -20px 0px 0px,
+		                    20px -20px 0px 0px,
+		                    -20px 20px 0px 0px,
+		                    0px 10px 0px 0px,
+		                    10px 0px 0px 0px,
+		                    -10px 0px 0px 0px,
+		                    0px -10px 0px 0px;
+		      }
+		      100% {
+		        transform: rotate(360deg);
+		      }
+		    }
+		</style>
 	</head>
 	<body>
 		<div id="page-wrapper">
@@ -134,12 +192,20 @@
 					<div id="content">
 						<div class="container">
 							<div class="row">
+								<div id="waitdiv" class="12u 12u(mobile)" hidden>									
+									please wait....
+									<div  class="pixel-spinner" >
+								  		<div class="pixel-spinner-inner"></div>
+									</div>
+
+								</div>
 								{% for div in Data %}
 								<!-- Box  -->
-								<div class="4u 12u(mobile)">
+								
+								<div class="4u 12u(mobile) newsdiv">
 
 									
-										<section>
+										<section style="height: 665.5px;overflow: hidden;">
 											<header>												
 												<a href="./{{ div.id }}/"><h2>{{ div.title }}</h2></a>
 												<h6 hidden>{{ div.keywords }}</h6>
@@ -233,7 +299,7 @@
 				<div id="copyright">
 					&copy; Untitled. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
 				</div>
-
+				
 		</div>
 
 		<!-- Scripts -->
@@ -242,7 +308,15 @@
 			<script src="{% static 'assets/js/skel-viewport.min.js' %}"></script>
 			<script src="{% static 'assets/js/util.js' %}"></script>
 			<script src="{% static 'assets/js/main.js' %}"></script>
+			<script type="text/javascript">
 
+				$("a").click(function(){
+					$('#waitdiv').removeAttr('hidden');
+					$('html,body').scrollTop(0);
+					$('.newsdiv').hide();
+					
+				})
+			</script>
 
 
 	</body>
