@@ -79,16 +79,12 @@ def SQL_all(request):
     return render(request,template,responds )
 def SQL_test(request,c):
     md.connectDB()
-    a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` GROUP BY `url` ORDER BY `PostList`.`id` ASC')
+    #a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` WHERE `Source_keyword` LIKE "%警力%" GROUP BY `url` ORDER BY `PostList`.`id` ASC')
     #a = md.exeSQl('SELECT * FROM `PostList`')
+    a = md.exeSQl('SELECT * FROM `PostList` WHERE `id` = '+str(c))
+    
+    cpint =0
 
-    md.close()
-    cpint =int(c)
-    for i in reversed(range(int(cpint)+1)):
-        if str(a[i][0]) == str(cpint):
-            cpint = i
-            #print(i)
-            break
 
     
     criteria_point = a[cpint][3]    
@@ -104,7 +100,12 @@ def SQL_test(request,c):
     opener_div["picurl"] = a[cpint][8]
     opener_div["date"] = a[cpint][4]
 
-    
+    keywordsarray = opener_div["keywords"][1:len(opener_div["keywords"])-1].split(",")
+    SQL = 'SELECT *,count(DISTINCT `url`) FROM `PostList` WHERE  '
+    for i in range(20):
+        SQL += '`Source_keyword` LIKE \'%'+keywordsarray[i]+'%\' OR'
+    SQL = SQL[:len(SQL)-2]+'GROUP BY `url` ORDER BY `PostList`.`id` ASC LIMIT 1000'
+    a = md.exeSQl(SQL)
     text_array=[]
     index=0
     top10_index=[]
@@ -112,7 +113,7 @@ def SQL_test(request,c):
     #print(len(a))
     while index <30000 and index <len(a)-1:
         
-        if index == cpint:
+        if a[index][0] == opener_div["id"]:
             index+=1    
         
         test_point = a[index][3]
@@ -168,11 +169,11 @@ def SQL_test(request,c):
         eachdiv["title"] = a[i][6][:20]
         eachdiv["picbiref"] = a[i][7]
         eachdiv["picurl"] = a[i][8]
-        eachdiv["date"] = a[cpint][4]
+        eachdiv["date"] = a[i][4]
 
 
         top10_div.append(eachdiv)
-
     template = 'news_each.html'
     responds = {'Topic':opener_div,'Data':top10_div}
+    md.close()
     return render(request,template,responds )

@@ -145,9 +145,9 @@
 											</header>
 											<!--<a href="#" class="feature-image"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>-->
 											{% if Topic.picurl == 'NULL' %}
-												<a href="../{{ Topic.id }}/" class="feature-image" style="width: 325px; height: 210px;"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>
+												<a href="../{{ Topic.id }}/" class="feature-image"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>
 											{% else %}
-												<a href="../{{ Topic.id }}/" class="feature-image" style="width: 325px; height: 210px; overflow: hidden;"><img src="{{ Topic.picurl }}" alt="" /></a>
+												<a href="../{{ Topic.id }}/" class="feature-image" ><img src="{{ Topic.picurl }}" alt="" /></a>
 											{% endif %}
 											<p>
 												{{ Topic.content }}
