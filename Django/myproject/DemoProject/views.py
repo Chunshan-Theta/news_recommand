@@ -53,17 +53,22 @@ def api_template(request):
     resp = HttpResponse(data)
     resp['Access-Control-Allow-Origin'] = '*'
     return resp 
-def SQL_all(request):
+def SQL_all(request,page=1):
     
     md.connectDB()
-    a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` GROUP BY `url` ORDER BY `PostList`.`id` ASC Limit 60')
+    a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` GROUP BY `url` ORDER BY `PostList`.`id` ASC')
     #a = md.exeSQl('SELECT * FROM `PostList`')
-
+    try:
+        page = int(page)
+        StartPoint =60*(page-1)
+    except:
+        page = 1
+        StartPoint = 0
     md.close()
 
     arr=[]
 
-    for i in a:
+    for i in a[0+page:60+page]:
         eachdiv={}
         eachdiv["id"] = i[0]
         eachdiv["content"] = i[1][:100]
@@ -75,9 +80,9 @@ def SQL_all(request):
         arr.append(eachdiv)
 
     template = 'news_list.html'
-    responds = {'Data':arr}
+    responds = {'Data':arr,"B_Page":int(page)-1,"N_Page":int(page)+1}
     return render(request,template,responds )
-def SQL_test(request,c):
+def SQL_each(request,c):
     md.connectDB()
     #a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` WHERE `Source_keyword` LIKE "%警力%" GROUP BY `url` ORDER BY `PostList`.`id` ASC')
     #a = md.exeSQl('SELECT * FROM `PostList`')

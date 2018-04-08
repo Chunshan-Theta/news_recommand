@@ -202,12 +202,12 @@
 								{% for div in Data %}
 								<!-- Box  -->
 								
-								<div class="4u 12u(mobile) newsdiv">
+								<div class="4u 12u(mobile) clickdiv">
 
 									
 										<section style="height: 665.5px;overflow: hidden;">
 											<header>												
-												<a href="./{{ div.id }}/"><h2>{{ div.title }}</h2></a>
+												<a href="../each/{{ div.id }}/"><h2>{{ div.title }}</h2></a>
 												<h6 hidden>{{ div.keywords }}</h6>
 											</header>
 											<!--<a href="#" class="feature-image"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>-->
@@ -224,6 +224,18 @@
 								</div>
 								<!-- Box  End-->
 								{% endfor %}
+								{% if B_Page > 0 %}
+								<div class="6u 6u(mobile) clickdiv">									
+										<section >
+											<a href="/Demo/SQL/{{ B_Page }}/"><p><--- before</p></a>
+										</section>
+								</div>
+								{% endif %}
+								<div class="6u 6u(mobile) clickdiv">									
+										<section >
+											<a href="/Demo/SQL/{{ N_Page }}/"><p>Next ---></p></a>
+										</section>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -313,7 +325,7 @@
 				$("a").click(function(){
 					$('#waitdiv').removeAttr('hidden');
 					$('html,body').scrollTop(0);
-					$('.newsdiv').hide();
+					$('.clickdiv').hide();
 					
 				})
 			</script>

@@ -22,7 +22,7 @@ from DemoProject.views import UsingStaticSource
 from DemoProject.views import Http_From_Get
 from DemoProject.views import Http_From_Post
 from DemoProject.views import For_Cycle
-from DemoProject.views import SQL_test
+from DemoProject.views import SQL_each
 from DemoProject.views import SQL_all
 
 
@@ -34,7 +34,8 @@ urlpatterns = [
     url(r'^Demo/Cycle/$', For_Cycle),
     url(r'^Demo/Get/(?P<input1>\S*)/(?P<input2>\S*)/$', Http_From_Get),#http://....../Demo/Get/HELLO/WORLD/
     url(r'^Demo/Post/$', Http_From_Post),
-    url(r'^Demo/SQL/(?P<c>\S*)/$', SQL_test),
+    url(r'^Demo/SQL/each/(?P<c>\S*)/$', SQL_each),
+    url(r'^Demo/SQL/(?P<page>\S*)/$', SQL_all),
     url(r'^Demo/SQL/$', SQL_all),
 
 
