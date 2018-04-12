@@ -39,7 +39,7 @@ DEBUG = 1
 from socket import gethostname
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    '*',# DON'T USE '*',if you site is for public.            
+    '140.115.126.216',# DON'T USE '*',if you site is for public.            
 ]
 
 
@@ -117,11 +117,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_URL = '/static/'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_URL =  '/static/For_News/'
+
+
+'''
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
-
+'''
  
 

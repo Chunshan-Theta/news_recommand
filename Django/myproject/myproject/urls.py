@@ -29,14 +29,9 @@ from DemoProject.views import SQL_all
 
 urlpatterns = [
     #url(r'^admin/', include(admin.site.urls)),
-    url(r'^Demo/$', hello_world),
-    url(r'^Demo/static_url/$', UsingStaticSource),
-    url(r'^Demo/Cycle/$', For_Cycle),
-    url(r'^Demo/Get/(?P<input1>\S*)/(?P<input2>\S*)/$', Http_From_Get),#http://....../Demo/Get/HELLO/WORLD/
-    url(r'^Demo/Post/$', Http_From_Post),
-    url(r'^Demo/SQL/each/(?P<c>\S*)/$', SQL_each),
-    url(r'^Demo/SQL/(?P<page>\S*)/$', SQL_all),
-    url(r'^Demo/SQL/$', SQL_all),
+    url(r'^NewsTW/each/(?P<c>\S*)/$', SQL_each),
+    url(r'^NewsTW/(?P<page>\S*)/$', SQL_all),
+    url(r'^NewsTW/$', SQL_all,name="home"),
 
 
 ]

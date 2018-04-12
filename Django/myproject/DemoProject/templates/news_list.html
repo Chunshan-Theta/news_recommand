@@ -100,8 +100,8 @@
 									
 										<section style="height: 665.5px;overflow: hidden;">
 											<header>												
-												<a href="/Demo/SQL/each/{{ div.id }}/"><h2>{{ div.title }}</h2></a>
-												<h6 hidden>{{ div.keywords }}</h6>
+												<a href="{% url 'home' %}each/{{ div.id }}/"><h2>{{ div.title }}</h2></a>
+												<h6 >{{ div.date }}</h6>
 											</header>
 											<!--<a href="#" class="feature-image"><img src="{% static 'images/pic05.jpg'%}" alt="" /></a>-->
 											{% if div.picurl == 'NULL' %}
@@ -120,13 +120,13 @@
 								{% if B_Page > 0 %}
 								<div class="6u 6u(mobile) clickdiv">									
 										<section >
-											<a href="/Demo/SQL/{{ B_Page }}/"><p><--- before</p></a>
+											<a href="{% url 'home' %}{{ B_Page }}/"><p><--- before</p></a>
 										</section>
 								</div>
 								{% endif %}
 								<div class="6u 6u(mobile) clickdiv">									
 										<section >
-											<a href="/Demo/SQL/{{ N_Page }}/"><p>Next ---></p></a>
+											<a href="{% url 'home' %}{{ N_Page }}/"><p>Next ---></p></a>
 										</section>
 								</div>
 							</div>

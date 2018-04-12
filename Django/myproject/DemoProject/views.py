@@ -56,7 +56,7 @@ def api_template(request):
 def SQL_all(request,page=1):
     
     md.connectDB()
-    a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` GROUP BY `url` ORDER BY `PostList`.`id` ASC')
+    a = md.exeSQl('SELECT *,count(DISTINCT `url`) FROM `PostList` GROUP BY `url` ORDER BY `PostList`.`Date` DESC')
     #a = md.exeSQl('SELECT * FROM `PostList`')
     try:
         page = int(page)
@@ -77,6 +77,7 @@ def SQL_all(request,page=1):
         eachdiv["title"] = i[6][:20]
         eachdiv["picbiref"] = i[7]
         eachdiv["picurl"] = i[8]
+        eachdiv["date"] = i[4]
         arr.append(eachdiv)
 
     template = 'news_list.html'
@@ -109,7 +110,7 @@ def SQL_each(request,c):
     SQL = 'SELECT *,count(DISTINCT `url`) FROM `PostList` WHERE  '
     for i in range(20):
         SQL += '`Source_keyword` LIKE \'%'+keywordsarray[i]+'%\' OR'
-    SQL = SQL[:len(SQL)-2]+'GROUP BY `url` ORDER BY `PostList`.`id` ASC LIMIT 1000'
+    SQL = SQL[:len(SQL)-2]+'GROUP BY `url` ORDER BY `PostList`.`Date` DESC LIMIT 1000'
     a = md.exeSQl(SQL)
     text_array=[]
     index=0
@@ -160,7 +161,7 @@ def SQL_each(request,c):
         index+=1
     else:
         
-        for i in range(9):
+        for i in range(21):
             #print(max(text_array)[1])
             top10_index.append(max(text_array)[1])
             del text_array[text_array.index(max(text_array))]
